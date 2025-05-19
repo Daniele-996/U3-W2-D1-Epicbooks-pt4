@@ -1,0 +1,17 @@
+*,
+*::before,
+::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-image: linear-gradient(rgb(216, 155, 0), rgb(255, 0, 0));
+  text-align: center;
+  color: white;
+}
+
+.imgClass {
+  object-fit: cover;
+  aspect-ratio: 1.5/2;
+}
