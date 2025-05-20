@@ -2,34 +2,24 @@ import { Component } from "react";
 import { Button, Card } from "react-bootstrap";
 import CommentArea from "./CommentArea";
 
-class SingleBook extends Component {
-  state = {
-    selected: false,
-  };
-  render() {
-    return (
-      <Card
-        className={`border-4   ${this.state.selected ? "border-dark" : ""}`}
-      >
-        <Card.Img
-          className="imgClass"
-          variant="top"
-          src={this.props.cardImg}
-          onClick={() => this.setState({ selected: !this.state.selected })}
-        />
-        <Card.Body>
-          <Card.Title className="text-truncate">
-            {this.props.cardTitle}
-          </Card.Title>
-          <Card.Text>{}</Card.Text>
-          <Button variant="primary">
-            Compra Ora a ${this.props.cardPrice}
-          </Button>
-          {/* {this.state.selected && <CommentArea id={this.props.cardId} />} */}
-        </Card.Body>
-      </Card>
-    );
-  }
-}
+const SingleBook = ({ book, onBookSelect, isSelected }) => {
+  return (
+    <Card
+      className={`mb-3 border-4 ${isSelected ? "border-dark" : ""}`}
+      onClick={() => onBookSelect(book.asin)}
+    >
+      <Card.Img
+        variant="top"
+        src={book.img}
+        className="imgClass"
+        style={{ cursor: "pointer" }}
+      />
+      <Card.Body>
+        <Card.Title className="text-truncate">{book.title}</Card.Title>
+        <Button variant="primary">Compra ora a ${book.price}</Button>
+      </Card.Body>
+    </Card>
+  );
+};
 
 export default SingleBook;

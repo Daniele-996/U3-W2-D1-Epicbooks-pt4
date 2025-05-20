@@ -4,7 +4,19 @@ import CommentArea from "./CommentArea";
 import { Component } from "react";
 
 class BookList extends Component {
-  // console.log("Books", props);
+  state = {
+    selectedAsin: "",
+  };
+
+  handleBookSelect = (asin) => {
+    this.setState({ selectedAsin: asin });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectedAsin !== this.state.selectedAsin) {
+      console.log("Libro selezionato:", this.state.selectedAsin);
+    }
+  }
 
   render() {
     return (
@@ -15,19 +27,16 @@ class BookList extends Component {
               {this.props.books.map((book) => (
                 <Col xs={12} sm={8} md={4} lg={4} key={book.asin}>
                   <SingleBook
-                    key={book.asin}
                     book={book}
-                    cardImg={book.img}
-                    cardTitle={book.title}
-                    cardPrice={book.price}
-                    cardId={book.asin}
+                    onBookSelect={this.handleBookSelect}
+                    isSelected={this.state.selectedAsin === book.asin}
                   />
                 </Col>
               ))}
             </Row>
           </Col>
           <Col className="col-4">
-            <CommentArea />
+            <CommentArea id={this.state.selectedAsin} />
           </Col>
         </Row>
       </Container>

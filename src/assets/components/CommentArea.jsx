@@ -9,6 +9,8 @@ class CommentArea extends Component {
   };
 
   fetchComment = async () => {
+    if (!this.props.id) return;
+
     try {
       const response = await fetch(
         "https://striveschool-api.herokuapp.com/api/comments/" + this.props.id,
@@ -21,13 +23,7 @@ class CommentArea extends Component {
       );
       if (response.ok) {
         const comments = await response.json();
-        this.setState({ comments }, () => {
-          // console.log(comments);
-          // this.state.comments.map((comment) => {
-          //   /*console.log(comment)*/
-          // });
-          // console.log(this.state);
-        });
+        this.setState({ comments });
       } else {
         throw new Error("Errore nella fetch");
       }
@@ -39,19 +35,34 @@ class CommentArea extends Component {
   componentDidMount() {
     this.fetchComment();
   }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.id !== this.props.id) {
+      this.fetchComment();
+    }
+  }
+
   render() {
     return (
-      <>
-        <Container>
-          <Row>
-            <Col>
-              <CommentsList comment={this.state.comments} id={this.props.id} />
-              <AddComment id={this.props.id} />
-            </Col>
-          </Row>
-        </Container>
-      </>
+      <Container>
+        <Row>
+          <Col>
+            {this.props.id ? (
+              <>
+                <CommentsList
+                  comment={this.state.comments}
+                  id={this.props.id}
+                />
+                <AddComment id={this.props.id} />
+              </>
+            ) : (
+              <p className="text-muted">Seleziona un libro</p>
+            )}
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
+
 export default CommentArea;

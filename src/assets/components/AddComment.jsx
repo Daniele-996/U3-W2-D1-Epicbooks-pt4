@@ -22,6 +22,12 @@ class AddComment extends Component {
     });
   };
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.id !== this.props.id) {
+      this.setState({ elementId: this.props.id });
+    }
+  }
+
   render() {
     return (
       <>
