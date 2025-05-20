@@ -1,6 +1,6 @@
-import { Component } from "react";
+// import { Component } from "react";
 import { Button, Card } from "react-bootstrap";
-import CommentArea from "./CommentArea";
+// import CommentArea from "./CommentArea";
 
 const SingleBook = ({ book, onBookSelect, isSelected }) => {
   return (
